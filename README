@@ -14,4 +14,7 @@ Create Topic: .\bin\windows\kafka-topics.bat --create --topic test-topic --boots
 Topic list: .\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
 
 Check Kafka Consumer Group Offsets (Message Lag)
-.\bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 --group group_id --describe
+.\bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 --group test-group-id --describe
+
+Verify Produce messages inside kafka topic
+.\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test-topic --from-beginning
