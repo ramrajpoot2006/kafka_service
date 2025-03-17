@@ -2,19 +2,19 @@ package com.ms.kafkapoc.config;
 
 
 import com.ms.kafkapoc.model.Customer;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
+//import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringDeserializer;
+//import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.config.KafkaListenerContainerFactory;
+//import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+//import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
-import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
+//import org.springframework.kafka.listener.ContainerProperties;
+//import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
@@ -28,10 +28,30 @@ public class KafkaConfig {
   @Value("${spring.kafka.bootstrap-servers}")
   private String bootstrapServers;
 
-  @Value("${spring.kafka.consumer.group-id.name}")
-  private String groupId;
+  //@Value("${spring.kafka.consumer.group-id.name}")
+  //private String groupId;
+
+  @Bean
+  public ProducerFactory<String, String> producerFactory () {
+
+    Map<String, Object> configProps = new HashMap<>();
+    configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    configProps.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);//Fix: Prevent type headers issue
+
+    // Important fix: Ensure JSON serializer is explicitly used
+    return new DefaultKafkaProducerFactory<>(configProps, new StringSerializer(), new JsonSerializer<>());
+  }
 
 
+  @Bean
+  public KafkaTemplate<String, String> kafkaTemplate () {
+
+    return new KafkaTemplate<>(producerFactory());
+  }
+
+/*
   @Bean
   public ProducerFactory<String, Customer> producerFactory () {
 
@@ -52,7 +72,9 @@ public class KafkaConfig {
     return new KafkaTemplate<>(producerFactory());
   }
 
+ */
 
+/*
   @Bean
   public ConsumerFactory<String, Customer> consumerFactory () {
 
@@ -82,6 +104,8 @@ public class KafkaConfig {
 
     return factory;
   }
+
+ */
 
 
 }

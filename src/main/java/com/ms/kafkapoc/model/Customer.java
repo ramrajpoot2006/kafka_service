@@ -1,21 +1,16 @@
 package com.ms.kafkapoc.model;
 
 
-import lombok.*;
+import java.util.Objects;
+import java.util.Optional;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
-public class Customer {
+public record Customer(String customerId, Optional<String> name, String email) {
 
-  private String customerId;
-
-  private String name;
-
-  private String email;
-
+  public Customer (String customerId, Optional<String> name, String email) {
+    this.customerId = customerId;
+    this.name = Objects.requireNonNull(name);
+    this.email = email;
+  }
 
 }

@@ -18,3 +18,22 @@ Check Kafka Consumer Group Offsets (Message Lag)
 
 Verify Produce messages inside kafka topic
 .\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test-topic --from-beginning
+
+########################################
+Swagger: Open API
+Example reference: https://www.baeldung.com/spring-rest-openapi-documentation
+
+Compatibility matrix of springdoc-openapi with spring-boot
+https://springdoc.org/#what-is-the-compatibility-matrix-of-springdoc-openapi-with-spring-boot
+
+Spring Boot Versions            Springdoc OpenAPI Versions
+
+API doc: http://localhost:8080/api-docs
+Open swagger: http://localhost:8080/swagger-ui/index.html  OR
+Open custom swagger path: http://localhost:8080/swagger-ui-custom.html,    config in application.yml file is springdoc.swagger-ui.path=/swagger-ui-custom.html
+Download yml file: http://localhost:8080/api-docs.yaml
+
+
+
+
+

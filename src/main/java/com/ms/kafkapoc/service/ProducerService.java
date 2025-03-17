@@ -1,7 +1,6 @@
 package com.ms.kafkapoc.service;
 
 
-import com.ms.kafkapoc.model.Customer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,20 +19,36 @@ public class ProducerService {
   @Value("${spring.kafka.topic.name}")
   private String topic;
 
-  private final KafkaTemplate<String, Customer> kafkaTemplate;
+  private final KafkaTemplate<String, String> kafkaTemplate;
 
 
+  public boolean sendMessage (String message) {
+    //kafkaTemplate.send(topic, customer.getCustomerId(), customer);
+
+    CompletableFuture<SendResult<String, String>> sendResult = kafkaTemplate.send(
+        topic,
+        "123",
+        message
+    );
+    log.info("Sent message: {}", message);
+
+    return sendResult.isDone();
+  }
+
+/*
   public boolean sendMessage (Customer customer) {
     //kafkaTemplate.send(topic, customer.getCustomerId(), customer);
 
     CompletableFuture<SendResult<String, Customer>> sendResult = kafkaTemplate.send(
         topic,
-        String.valueOf(customer.getCustomerId()),
+        customer.customerId(),
         customer
     );
     log.info("Sent message: {}", customer.toString());
 
     return sendResult.isDone();
   }
+
+ */
 
 }
