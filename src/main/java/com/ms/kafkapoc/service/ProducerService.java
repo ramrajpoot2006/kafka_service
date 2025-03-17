@@ -27,10 +27,15 @@ public class ProducerService {
 
     CompletableFuture<SendResult<String, String>> sendResult = kafkaTemplate.send(
         topic,
-        "123",
         message
     );
-    log.info("Sent message: {}", message);
+    try {
+      SendResult<String, String> result = sendResult.get(); // Blocks until result is available
+      System.out.println("Message sent to partition: " + result.getRecordMetadata().partition());
+      log.info("Sent message: {}", message);
+    } catch (Exception e) {
+      log.error("Failed to send message: " + e.getMessage());
+    }
 
     return sendResult.isDone();
   }

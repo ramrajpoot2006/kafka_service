@@ -38,10 +38,10 @@ public class KafkaConfig {
     configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-    configProps.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);//Fix: Prevent type headers issue
+    //configProps.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);//Fix: Prevent type headers issue
 
     // Important fix: Ensure JSON serializer is explicitly used
-    return new DefaultKafkaProducerFactory<>(configProps, new StringSerializer(), new JsonSerializer<>());
+    return new DefaultKafkaProducerFactory<>(configProps);
   }
 
 
